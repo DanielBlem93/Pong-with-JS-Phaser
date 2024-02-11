@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+    <script src="main.js"></script>
+    <script src="node_modules/phaser/dist/phaser.min.js" defer></script>
+    <script
+      src="node_modules/phaser/dist/phaser-arcade-physics.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <script>
+      const game = new Phaser.Game(config);
+
+      const config = {
+        type: Phaser.AUTO,
+        parent: "phaser-example",
+        width: 800,
+        height: 600,
+        backgroundColor: "#000",
+        scene: {
+          preload: preload,
+          create: create,
+          update: update,
+        },
+      };
+
+      function preload() {
+        
+      }
+
+      function create() {}
+
+      function update() {}
+    </script>
+  </body>
+</html>
