@@ -1,9 +1,11 @@
-
+start = true
 class Pong extends Phaser.Scene {
   player1
   player2
+  ball
+  ballVelocityX = 200
+  ballVelocityY = (Math.random() *200) -100
   cursors
-
   keyW
   keyS
   player1Score = 0
@@ -14,7 +16,7 @@ class Pong extends Phaser.Scene {
   constructor() {
     super()
   }
-  
+
 
   preload() {
     console.log(this)
@@ -29,6 +31,7 @@ class Pong extends Phaser.Scene {
     this.addScoreText()
     this.addPlayers()
     this.addControls()
+    this.addBall()
 
   }
 
@@ -36,8 +39,21 @@ class Pong extends Phaser.Scene {
   update() {
     this.handlePlayerControls(this.player1, this.cursors);
     this.handlePlayerControls(this.player2, { up: this.keyW, down: this.keyS });
+    this.startgame()
   }
 
+  startgame() {
+
+    this.ball.setVelocityX(this.ballVelocityX)
+    this.ball.setVelocityY(this.ballVelocityY)
+
+  }
+
+  addBall() {
+    this.ball = this.physics.add.sprite(401, 242.5, 'ball');
+    this.ball.setCollideWorldBounds(true);
+    this.ball.setBounce(1);
+  }
 
   changeWorldBounds() {
     this.physics.world.setBounds(0, 48, 802, 407);
@@ -45,7 +61,6 @@ class Pong extends Phaser.Scene {
 
 
   preloadImages() {
-    this.load.image("ball", "src/assets/Ball.png");
     this.load.image("board", "src/assets/Board.png");
     this.load.image("scoreBar", "src/assets/ScoreBar.png");
     this.load.spritesheet("player", "src/assets/Player.png", {
@@ -56,6 +71,10 @@ class Pong extends Phaser.Scene {
       frameWidth: 17,
       frameHeight: 120,
     });
+    this.load.spritesheet("ball", "src/assets/Ball.png", {
+      frameWidth: 30,
+      frameHeight: 30,
+    });
   }
 
 
@@ -64,7 +83,6 @@ class Pong extends Phaser.Scene {
     this.add.image(0, 0, "board").setOrigin(0, 0);
     this.add.image(0, 0, "scoreBar").setOrigin(0, 0);
     this.add.image(802, 0, "scoreBar").setOrigin(0, 0).setScale(-1, 1);
-    this.add.image(401, 247, "ball");
   }
 
 
@@ -80,7 +98,7 @@ class Pong extends Phaser.Scene {
     this.player2 = this.addPlayer(30, 247, "player2");
   }
 
-  
+
   addPlayer(xPos, yPos, playerImage) {
     let player = this.physics.add.sprite(xPos, yPos, playerImage);
     player.setCollideWorldBounds(true);
@@ -106,12 +124,6 @@ class Pong extends Phaser.Scene {
       player.setVelocityY(0);
     }
   }
-
-
-
-
-
- 
 
 
 
