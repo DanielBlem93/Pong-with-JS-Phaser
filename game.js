@@ -47,7 +47,7 @@ class Pong extends Phaser.Scene {
     this.handlePlayerControls(this.player1, this.cursors);
     this.handlePlayerControls(this.player2, { up: this.keyW, down: this.keyS });
     this.startgame()
-    this.holdPlayersPosition()
+
     // this.checkWinner()
   }
 
@@ -59,16 +59,16 @@ class Pong extends Phaser.Scene {
   // }
 
   gameOver() {
+
     this.physics.pause();
-    setTimeout(() => {
-      this.resetGame()
-      
-    }, 2000);
 
     setTimeout(() => {
+      this.resetGame()
+    }, 2000);
+    setTimeout(() => {
       this.startgame()
-      this.physics.resume()
     }, 3000);
+
   }
   onWorldBoundsListener() {
     this.physics.world.on('worldbounds', (body, up, down, left, right) => {
@@ -84,15 +84,15 @@ class Pong extends Phaser.Scene {
   resetGame() {
     // Ballposition zurücksetzen
     this.ball.setPosition(401, 242.5);
-    this.ballVelocityX = -200
+    this.ballVelocityX = Math.random() <= 0.5 ? -200 : 200;
     this.ballVelocityY = (Math.random() * 200) - 100
+
 
     // Spielerpositionen zurücksetzen
     this.player1.setPosition(770, 247);
     this.player2.setPosition(30, 247);
 
     // Spielzustand zurücksetzen
-    start = false;
     started = false;
   }
 
@@ -118,18 +118,18 @@ class Pong extends Phaser.Scene {
 
 
   hitBall() {
-    
+
     if (this.ballVelocityX > 0) {
 
-      this.ballVelocityX = -(Math.abs(this.ballVelocityX)) - 10
+      this.ballVelocityX = -(Math.abs(this.ballVelocityX)) - 20
       this.ball.setVelocityX(this.ballVelocityX)
 
     } else if (this.ballVelocityX < 0) {
-      console.log(this.ballVelocityX)
-      this.ballVelocityX = (Math.abs(this.ballVelocityX)) + 10
+      this.ballVelocityX = (Math.abs(this.ballVelocityX)) + 20
       this.ball.setVelocityX(this.ballVelocityX)
 
     }
+    console.log(this.ballVelocityX)
   }
 
 
@@ -138,16 +138,11 @@ class Pong extends Phaser.Scene {
       this.ball.setVelocityX(this.ballVelocityX)
       this.ball.setVelocityY(this.ballVelocityY)
       started = true
+      this.physics.resume()
     }
   }
 
-  holdPlayersPosition() {
-    this.player1.x = 770
-    this.player2.x = 30
-    this.player1.setVelocityX(0)
-    this.player2.setVelocityX(0)
-    
-  }
+
 
 
   addBall() {
@@ -199,7 +194,10 @@ class Pong extends Phaser.Scene {
   addPlayers() {
 
     this.player1 = this.addPlayer(770, 247, "player");
+    this.player1.setImmovable(true)
     this.player2 = this.addPlayer(30, 247, "player2");
+    this.player2.setImmovable(true)
+
   }
 
 
