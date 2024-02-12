@@ -5,7 +5,7 @@ class Pong extends Phaser.Scene {
   player1
   player2
   ball
-  ballVelocityX = -200
+  ballVelocityX = Math.random() <= 0.5 ? -200 : 200;
   ballVelocityY = (Math.random() * 200) - 100
   cursors
   keyW
@@ -62,11 +62,13 @@ class Pong extends Phaser.Scene {
     this.physics.pause();
     setTimeout(() => {
       this.resetGame()
-      setTimeout(() => {
-        this.startgame()
-        this.physics.resume()
-      }, 2000);
+      
     }, 2000);
+
+    setTimeout(() => {
+      this.startgame()
+      this.physics.resume()
+    }, 3000);
   }
   onWorldBoundsListener() {
     this.physics.world.on('worldbounds', (body, up, down, left, right) => {
@@ -116,6 +118,7 @@ class Pong extends Phaser.Scene {
 
 
   hitBall() {
+    
     if (this.ballVelocityX > 0) {
 
       this.ballVelocityX = -(Math.abs(this.ballVelocityX)) - 10
@@ -141,6 +144,9 @@ class Pong extends Phaser.Scene {
   holdPlayersPosition() {
     this.player1.x = 770
     this.player2.x = 30
+    this.player1.setVelocityX(0)
+    this.player2.setVelocityX(0)
+    
   }
 
 
@@ -148,6 +154,7 @@ class Pong extends Phaser.Scene {
     this.ball = this.physics.add.sprite(401, 242.5, 'ball');
     this.ball.setCollideWorldBounds(true);
     this.ball.setBounce(1);
+    this.ball.setCircle(15)
     this.ball.body.onWorldBounds = true;
     this.ball.body.collideWorldBounds = true
   }
@@ -233,7 +240,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   scene: Pong
