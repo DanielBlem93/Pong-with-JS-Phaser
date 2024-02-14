@@ -1,16 +1,39 @@
-body{
+body {
     display: flex;
     margin: 0;
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.836);
     height: 100vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
 }
 
-button{
-position: absolute;
-padding: 15px;
-border-radius: 15px;
-background-color: darkmagenta;
-font-size: 32px;
+button {
+    position: absolute;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: darkmagenta;
+    font-size: 32px;
+}
+
+.icons-container {
+    width: 802px;
+    height: 455px;
+    position: absolute;
+
+    border: 2px solid rgb(0, 0, 0);
+    display: flex;
+    justify-content: end;
+}
+
+.sound-icons {
+    padding: 8px;
+}
+
+.instuctions-container {
+    color: rgb(255, 255, 255);
+
+    position: absolute;
+    bottom: 0;
+
 }

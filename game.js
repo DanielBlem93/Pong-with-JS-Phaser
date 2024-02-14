@@ -4,6 +4,7 @@ let started = false
 let gameOver = false
 
 
+
 class Pong extends Phaser.Scene {
   player1
   player2
@@ -21,6 +22,11 @@ class Pong extends Phaser.Scene {
   score2 = 0
   winText = ""
 
+  mainTheme
+  hitPaddle
+  hitWall
+  scoreSound
+
   constructor() {
     super()
   }
@@ -31,12 +37,14 @@ class Pong extends Phaser.Scene {
     console.log(this)
     this.changeWorldBounds()
     this.preloadImages()
+    this.preloadAudio()
   }
 
 
 
   create() {
     this.addImages()
+    this.addSounds()
     this.addScoreText()
     this.addPlayers()
     this.addControls()
@@ -82,10 +90,25 @@ class Pong extends Phaser.Scene {
   }
 
 
+  preloadAudio() {
+
+    this.load.audio('hitPaddle', 'src/assets/audio/hitPaddle.mp3');
+    this.load.audio('hitWall', 'src/assets/audio/hitWall.mp3');
+    this.load.audio('score', 'src/assets/audio/score.mp3');
+
+  }
+
   addImages() {
     this.add.image(0, 0, "board").setOrigin(0, 0);
     this.add.image(0, 0, "scoreBar").setOrigin(0, 0);
     this.add.image(802, 0, "scoreBar").setOrigin(0, 0).setScale(-1, 1);
+  }
+
+  addSounds() {
+
+    this.hitPaddle = this.sound.add('hitPaddle')
+    this.hitWall = this.sound.add('hitWall')
+    this.scoreSound = this.sound.add('score')
   }
 
 
@@ -154,6 +177,7 @@ class Pong extends Phaser.Scene {
       ball.setVelocityX(newVelocityX + 20);
     }
     ball.setVelocityY(newVelocityY);
+    this.hitPaddle.play()
   }
 
 
@@ -161,10 +185,16 @@ class Pong extends Phaser.Scene {
     this.physics.world.on('worldbounds', (body, up, down, left, right) => {
       if (right) {
         this.addPoints('player1')
+        this.scoreSound.play()
       }
       else if (left) {
         this.addPoints('player2')
+        this.scoreSound.play()
       }
+      else if (up || down) {
+        this.hitWall.play()
+      }
+
     });
   }
 
@@ -213,9 +243,6 @@ class Pong extends Phaser.Scene {
       this.physics.resume()
     }
   }
-
-
-
 
 
   resetGame() {
@@ -267,15 +294,6 @@ class Pong extends Phaser.Scene {
 
 
 
-
-
-
-
-
-
-  
-
-
   handlePlayerControls(player, controls) {
     if (controls.down.isDown) {
       player.setVelocityY(300);
@@ -287,17 +305,13 @@ class Pong extends Phaser.Scene {
   }
 
 
-
- 
-
-
   checkWinner() {
     if (this.score2 === 7) {
       this.addWinText('player2');
     } else if (this.score1 === 7) {
       this.addWinText('player1');
     }
-    if (this.score2 === 2 || this.score1 === 2) {
+    if (this.score2 === 7 || this.score1 === 7) {
       this.endGame();
     }
   }

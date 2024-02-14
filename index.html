@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,10 +11,22 @@
     <script defer src="script.js"></script>
   </head>
   <body>
+    <div class="instuctions-container">
+      <h2>Controlls</h2>
+      <p><b>Player1: W = UP / S = DOWN</b></b></p>
+      <p><b>Player2: &uarr; = UP / &darr; = DOWN</b></b></p>
+    </div>
+    <div class="icons-container">
+      <div class="sound-icons">
+        <img id="mute" onclick="changeSound()" style="display: none;" src="src/assets/mute.png" />
+        <img id="soundOn" onclick="changeSound()" src="src/assets/soundOn.png" />
+      </div>
+    </div>
 
-    <button onclick="startGame()"  id="start-btn">Start Game</button>
-    <button style="display: none; ;" onclick="replay()" id="replay-btn">Replay?</button>
-
+    <button onclick="startGame()" id="start-btn">Start Game</button>
+    <button style="display: none" onclick="replay()" id="replay-btn">
+      Replay?
+    </button>
   </body>
 </html>
 <!-- assets by https://myebstudios.itch.io/ -->
