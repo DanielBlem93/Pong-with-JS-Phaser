@@ -1,3 +1,16 @@
 body{
+    display: flex;
     margin: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.836);
+    height: 100vh;
+}
+
+button{
+position: absolute;
+padding: 15px;
+border-radius: 15px;
+background-color: darkmagenta;
+font-size: 32px;
 }
